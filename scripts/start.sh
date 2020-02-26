@@ -33,6 +33,8 @@ preconditions() {
 
 preconditions
 
+VERSION_TAG="${SERVICE_NAME}-${VERSION}"
+
 # Run new container
 echo "Starting new version of container. Using version: ${VERSION}";
 echo "Using port: ${APP_PORT_ON_HOST}";
@@ -41,7 +43,7 @@ echo "Using port: ${APP_PORT_ON_HOST}";
 
 docker run --name ${SERVICE_NAME} -d \
     -p ${APP_PORT_ON_HOST}:10023 \
-    -e DOCKER_TAG=${VERSION} \
+    -e DOCKER_TAG="${VERSION_TAG}" \
     -e JAVA_OPTS="-XX:+ExitOnOutOfMemoryError" \
     -e APP_OAUTH_CLIENT_ID=${APP_OAUTH_CLIENT_ID} \
     -e APP_OAUTH_CLIENT_SECRET=${APP_OAUTH_CLIENT_SECRET} \
@@ -55,4 +57,4 @@ docker run --name ${SERVICE_NAME} -d \
     --memory=200m \
     --restart=no \
     --network autocoin-services-admin \
-    localhost:5000/${SERVICE_NAME}:${VERSION}
+    localhost:5000/${SERVICE_NAME}:${VERSION_TAG}
