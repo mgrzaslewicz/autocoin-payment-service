@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# turn on debug mode
-set -x
 
 preconditions() {
     if [[ -f "env.properties" ]]
