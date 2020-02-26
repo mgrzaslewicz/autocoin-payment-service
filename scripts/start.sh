@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# turn on debug mode
-set -x
 
 preconditions() {
     if [[ -f "env.properties" ]]
@@ -20,6 +18,7 @@ preconditions() {
     "JDBC_URL"
     "LOG_PATH"
     "SERVICE_NAME"
+    "VERSION"
   )
 
   for requiredVariable in "${requiredVariables[@]}"; do
