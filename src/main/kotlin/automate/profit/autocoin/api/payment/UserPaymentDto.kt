@@ -13,7 +13,7 @@ fun UserSubscription.toDto(currentTimeMillis: Long) = UserSubscriptionDto(
         subscriptionCode = subscriptionCode,
         validFrom = validFrom.toEpochMilli(),
         validTo = validTo.toEpochMilli(),
-        active = validTo.toEpochMilli() < currentTimeMillis
+        active = currentTimeMillis < validTo.toEpochMilli()
 )
 
 data class UserPaymentDto(

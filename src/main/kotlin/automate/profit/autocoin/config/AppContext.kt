@@ -1,9 +1,6 @@
 package automate.profit.autocoin.config
 
-import automate.profit.autocoin.api.payment.CreateOrUpdateUserPaymentHandler
-import automate.profit.autocoin.api.payment.SetUserPaymentPaidHandler
-import automate.profit.autocoin.api.payment.GetSubscriptionHandler
-import automate.profit.autocoin.api.payment.GetUserPaymentDetailsHandler
+import automate.profit.autocoin.api.payment.*
 import automate.profit.autocoin.api.undertow.ServerBuilder
 import automate.profit.autocoin.oauth.client.AccessTokenAuthenticator
 import automate.profit.autocoin.oauth.client.AccessTokenInterceptor
@@ -72,8 +69,7 @@ class AppContext(private val appConfig: AppConfig) {
             oauth2BearerTokenAuthHandlerWrapper = oauth2BearerTokenAuthHandlerWrapper
     )
 
-    val getActiveUserSubscriptionHandler = GetUserPaymentDetailsHandler(
-            priceService = priceService,
+    val getActiveUserSubscriptionHandler = GetActiveUserSubscriptionHandler(
             objectMapper = objectMapper,
             subscriptionService = subscriptionService,
             oauth2BearerTokenAuthHandlerWrapper = oauth2BearerTokenAuthHandlerWrapper

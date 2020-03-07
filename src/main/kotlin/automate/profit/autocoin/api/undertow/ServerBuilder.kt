@@ -17,7 +17,7 @@ class ServerBuilder(
         val routingHandler = RoutingHandler()
         val allHandlers = apiHandlers + apiControllers.flatMap { it.apiHandlers() }
         check(allHandlers.isNotEmpty()) { "No handlers provided" }
-        logger.info { "Handlers: ${allHandlers.map { "${it.method} ${it.urlTemplate} ${it::class}" }}" }
+        logger.info { "${allHandlers.size} handlers: ${allHandlers.map { "\n${it.method} ${it.urlTemplate} ${it::class}" }}" }
         allHandlers.forEach { handler ->
             routingHandler.add(handler.method, handler.urlTemplate, handler.httpHandler)
         }
