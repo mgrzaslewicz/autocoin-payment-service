@@ -43,7 +43,10 @@ class TelegramPaymentListener(private val executorService: ExecutorService, priv
 class NoOpPaymentListener : PaymentListener {
     companion object : KLogging()
 
+    var lastPaymentCreated: UserPayment? = null
+
     override fun onPaymentCreated(userPayment: UserPayment) {
         logger.info { "Would notify about created payment: $userPayment" }
+        lastPaymentCreated = userPayment
     }
 }

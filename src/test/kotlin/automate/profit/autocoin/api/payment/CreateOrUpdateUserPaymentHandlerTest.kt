@@ -36,13 +36,14 @@ class CreateOrUpdateUserPaymentHandlerTest {
 
     @Mock
     private lateinit var subscriptionService: SubscriptionService
-
+private lateinit var paymentListener: NoOpPaymentListener
     @BeforeEach
     fun setup() {
+        paymentListener = NoOpPaymentListener()
         port = getFreePort()
         val testedHandler = CreateOrUpdateUserPaymentHandler(
                 subscriptionService = subscriptionService,
-                paymentListener = NoOpPaymentListener(),
+                paymentListener = paymentListener,
                 objectMapper = objectMapper,
                 oauth2BearerTokenAuthHandlerWrapper = MockSecurityContextHandlerWrapper(
                         UserAccount(
@@ -123,6 +124,7 @@ class CreateOrUpdateUserPaymentHandlerTest {
             val userPaymentDto = objectMapper.readValue(it.body?.string(), UserPaymentDto::class.java)
             assertThat(userPaymentDto).isEqualTo(UserPaymentDto(
                     userAccountId = "user-account-id-1",
+                    userPaymentId = paymentListener.lastPaymentCreated!!.userPaymentId,
                     subscriptionCode = sampleSubscription.subscriptionCode,
                     paymentStatus = PaymentStatus.NEW,
                     btcSenderAddress = "btc-sender-address-1",

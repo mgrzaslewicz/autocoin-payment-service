@@ -18,6 +18,7 @@ fun UserSubscription.toDto(currentTimeMillis: Long) = UserSubscriptionDto(
 
 data class UserPaymentDto(
         val userAccountId: String,
+        val userPaymentId: String,
         val subscriptionCode: String,
         val paymentStatus: PaymentStatus,
         val btcSenderAddress: String?,
@@ -29,6 +30,7 @@ data class UserPaymentDto(
 
 fun UserPayment.toDto() = UserPaymentDto(
         userAccountId = userAccountId,
+        userPaymentId = userPaymentId,
         subscriptionCode = subscriptionCode,
         paymentStatus = paymentStatus,
         btcSenderAddress = btcSenderAddress,
