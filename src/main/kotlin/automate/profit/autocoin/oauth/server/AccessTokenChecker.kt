@@ -57,7 +57,7 @@ class AccessTokenChecker(
             return when (tokenCheckResponse.code) {
                 401 -> null
                 200 -> {
-                    return if (responseBody?.contains("\"client_id\"") == true) {
+                    return if (responseBody?.contains("\"user_name\"") == false) {
                         val clientToken = objectMapper.readValue(responseBody, ClientTokenDto::class.java)
                         CheckTokenDto(clientTokenDto = clientToken)
                     } else {
