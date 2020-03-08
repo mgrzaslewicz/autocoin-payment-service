@@ -61,6 +61,7 @@ class GetSubscriptionHandlerTest {
         val response = httpClientWithoutAuthorization.newCall(request).execute()
         // then
         assertThat(response.code).isEqualTo(200)
+        assertThat(response.header("Content-Type")).isEqualTo("application/json")
         response.use {
             val subscriptionDto = objectMapper.readValue(it.body?.string(), SubscriptionDto::class.java)
             assertThat(subscriptionDto).isEqualTo(SubscriptionDto(

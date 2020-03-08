@@ -7,4 +7,5 @@ interface ApiHandler {
     val method: HttpString
     val urlTemplate: String
     val httpHandler: HttpHandler
+    fun contentType(): String = "application/json"
 }

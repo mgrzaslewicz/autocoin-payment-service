@@ -19,7 +19,7 @@ class ServerBuilder(
         check(allHandlers.isNotEmpty()) { "No handlers provided" }
         logger.info { "${allHandlers.size} handlers: ${allHandlers.map { "\n${it.method} ${it.urlTemplate} ${it::class}" }}" }
         allHandlers.forEach { handler ->
-            routingHandler.add(handler.method, handler.urlTemplate, handler.httpHandler)
+            routingHandler.add(handler.method, handler.urlTemplate, handler.wrapWithContentTypeHandler())
         }
         return Undertow.builder()
                 .addHttpListener(appServerPort, "0.0.0.0")
@@ -52,6 +52,20 @@ class ServerBuilder(
                 this.handleRequest(it)
             }
         }
+    }
+
+    private fun ApiHandler.wrapWithContentTypeHandler(): HttpHandler {
+        val contentType = this.contentType()
+        val httpHandler = this.httpHandler
+        return if (contentType.isNotEmpty()) {
+            return HttpHandler { serverExchange ->
+                with(serverExchange.responseHeaders) {
+                    put(tryFromString("Content-Type"), contentType)
+                }
+                httpHandler.handleRequest(serverExchange)
+            }
+        } else this.httpHandler
+
     }
 
 }

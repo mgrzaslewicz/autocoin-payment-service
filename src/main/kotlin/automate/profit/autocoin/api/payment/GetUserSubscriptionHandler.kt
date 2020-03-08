@@ -8,6 +8,7 @@ import automate.profit.autocoin.payment.SubscriptionService
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.undertow.server.HttpHandler
 import io.undertow.server.HttpServerExchange
+import io.undertow.util.HttpString
 import io.undertow.util.Methods.GET
 import io.undertow.util.StatusCodes
 
@@ -40,6 +41,7 @@ class GetActiveUserSubscriptionHandler(
             if (userAccountId != null) {
                 val userSubscription = subscriptionService.getUserSubscriptionByCode(subscriptionCode, userAccountId)
                 if (userSubscription != null) {
+                    it.responseHeaders.add(HttpString.tryFromString("Content-Type"), "application/json")
                     it.responseSender.send(objectMapper.writeValueAsString(userSubscription.toDto(currentTimeMillis())))
                 } else {
                     it.statusCode = StatusCodes.NOT_FOUND
