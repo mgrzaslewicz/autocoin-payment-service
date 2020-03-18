@@ -38,7 +38,7 @@ VERSION_TAG="${SERVICE_NAME}-${VERSION}"
 
 # Run new container
 echo "Starting new version of container. Using version: ${VERSION}";
-echo "Using port: ${APP_PORT_ON_HOST}";
+echo "Exposing docker port ${DOCKER_PORT} to host port ${HOST_PORT}"
 
 # Use JAVA_OPTS="-XX:+ExitOnOutOfMemoryError" to prevent from running when any of threads runs of out memory and dies
 
